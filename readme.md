@@ -130,4 +130,4 @@ This project is a Django-based backend application that includes user registrati
 
 ## Authentication
 
-This project uses simpleJWT for authentication. Obtain the access and refresh tokens from the login endpoint and use the access token in the `Authorization` header for protected endpoints.
+This project uses simpleJWT for authentication. Obtain the access and refresh tokens from the login endpoint and use the access token in the `Authorization` header at bearer token for protected endpoints.

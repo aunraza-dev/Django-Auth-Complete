@@ -6,9 +6,24 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import AllowAny
 from userApp.utils import verify_password, hash_password
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 class UserRegistrationView(APIView):
     permission_classes = [AllowAny]
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['email','username','password'],
+            properties={
+                'email': openapi.Schema(type=openapi.TYPE_STRING),
+                'bio': openapi.Schema(type=openapi.TYPE_STRING),
+                'username': openapi.Schema(type=openapi.TYPE_STRING),
+                'password': openapi.Schema(type=openapi.TYPE_STRING),
+            }
+        ),
+        responses={200: 'Success', 400: 'Bad Request'},
+    )
     def post(self, request, format=None):
         try:
             email = request.data.get('email')
@@ -27,7 +42,17 @@ class UserRegistrationView(APIView):
         
 class UserLoginView(APIView):
     permission_classes = [AllowAny]
-
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['email', 'password'],
+            properties={
+                'email': openapi.Schema(type=openapi.TYPE_STRING, format='email'),
+                'password': openapi.Schema(type=openapi.TYPE_STRING, format='password'),
+            },
+        ),
+        responses={200: 'Success', 400: 'Bad Request'},
+    )
     def post(self, request):
         try:
             email = request.data.get('email')
@@ -65,7 +90,16 @@ class UserLoginView(APIView):
 class PasswordResetView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
-
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['new_password'],
+            properties={
+                'new_password': openapi.Schema(type=openapi.TYPE_STRING, format='password'),
+            },
+        ),
+        responses={200: 'Success', 400: 'Bad Request'},
+    )
     def post(self, request):
         try:
             new_password = request.data.get('new_password')
@@ -84,6 +118,9 @@ class PasswordResetView(APIView):
 class UserDetailView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    @swagger_auto_schema(
+            responses={200:'Success', 400:'Bad Request'},
+    )
 
     def get(self, request):
         try:
