@@ -62,24 +62,6 @@ class UserLoginView(APIView):
         except Exception as e:
             return Response({'message': str(e), 'success': False})
         
-# class PasswordResetView(APIView):
-#     def post(self, request):
-#         try:
-#             email = request.data.get('email')
-#             new_password = request.data.get('new_password')
-
-#             hashed_password = hash_password(new_password)
-
-#             user = User.objects.get(email=email)
-#             user.password = hashed_password
-#             user.save()
-
-#             return Response({'message': 'Password updated successfully', 'success': True})
-#         except User.DoesNotExist:
-#             return Response({'message': 'User not found', 'success': False})
-#         except Exception as e:
-#             return Response({'message': str(e), 'success': False})
-
 class PasswordResetView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
@@ -96,5 +78,22 @@ class PasswordResetView(APIView):
             return Response({'message': 'Password updated successfully', 'success': True})
         except User.DoesNotExist:
             return Response({'message': 'User not found', 'success': False})
+        except Exception as e:
+            return Response({'message': str(e), 'success': False})
+        
+class UserDetailView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            user = request.user
+            user_data = {
+                'id': user.id,
+                'email': user.email,
+                'username': user.username,
+                'bio': user.bio
+            }
+            return Response({'data': user_data, 'message': 'User data retrieved successfully', 'success': True})
         except Exception as e:
             return Response({'message': str(e), 'success': False})
