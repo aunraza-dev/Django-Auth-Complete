@@ -1,13 +1,15 @@
 from pathlib import Path
 from datetime import timedelta
+import environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+env = environ.Env()
+environ.Env.read_env(BASE_DIR / '.env.local')
 
-SECRET_KEY = 'django-insecure-^w%m5aadi$3q!p2=f1dxdb7z53up2@$biat(2abiq&(nk^**xx'
-
-DEBUG = True
-
-ALLOWED_HOSTS = ['*']
+ENABLE_SWAGGER = env.bool('ENABLE_SWAGGER')
+SECRET_KEY = env('SECRET_KEY')
+DEBUG = env.bool('DEBUG')
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 INSTALLED_APPS = [
     'debug_toolbar',
@@ -70,8 +72,8 @@ WSGI_APPLICATION = 'userProject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': env('DATABASE_ENGINE'),
+        'NAME': BASE_DIR / env('DATABASE_NAME'),
     }
 }
 
@@ -109,11 +111,11 @@ INTERNAL_IPS = [
 ]
 
 SWAGGER_SETTINGS = {
-    'SECURITY_DEFINITIONS': {
-        'Token': {
-            'type': 'apiKey',
-            'name': 'Authorization',
-            'in': 'header'
-        }
+        'SECURITY_DEFINITIONS': {
+            'Token': {
+                'type': 'apiKey',
+                'name': 'Authorization',
+                'in': 'header'
+            }
+        },
     }
-}
