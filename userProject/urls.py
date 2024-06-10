@@ -9,13 +9,14 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('app/', include ('userApp.urls')),
     path("__debug__/", include("debug_toolbar.urls")),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
 
-if settings.DEBUG and settings.ENABLE_SWAGGER:
+if settings.ENABLE_SWAGGER:
     from rest_framework import permissions
     from drf_yasg.views import get_schema_view
     from drf_yasg import openapi

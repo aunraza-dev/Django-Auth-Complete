@@ -1,5 +1,6 @@
 from pathlib import Path
 from datetime import timedelta
+import os
 import environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,6 +11,7 @@ ENABLE_SWAGGER = env.bool('ENABLE_SWAGGER')
 SECRET_KEY = env('SECRET_KEY')
 DEBUG = env.bool('DEBUG')
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS')
 
 INSTALLED_APPS = [
     'debug_toolbar',
@@ -55,7 +57,7 @@ ROOT_URLCONF = 'userProject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'userApp/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -119,3 +121,5 @@ SWAGGER_SETTINGS = {
             }
         },
     }
+
+LOGIN_REDIRECT_URL = '/admin/'
