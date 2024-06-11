@@ -8,6 +8,8 @@ This project is a Django-based backend application that includes user registrati
 - User Login
 - Password Reset
 - User Detail Retrieval
+- OTP Verification
+- Send Password Reset OTP
 - JWT-based Authentication
 
 ## Installation
@@ -128,6 +130,43 @@ This project is a Django-based backend application that includes user registrati
     }
     ```
 
+### OTP Verification
+
+- **URL**: `/api/otp-verify/`
+- **Method**: `POST`
+- **Request Body**:
+    ```json
+    {
+        "email": "user@example.com",
+        "otp": 123456
+    }
+    ```
+- **Response**:
+    ```json
+    {
+        "message": "OTP verified successfully.",
+        "success": True
+    }
+    ```
+
+### Send Password Reset OTP
+
+- **URL**: `/api/send-password-reset-otp/`
+- **Method**: `POST`
+- **Request Body**:
+    ```json
+    {
+        "email": "user@example.com"
+    }
+    ```
+- **Response**:
+    ```json
+    {
+        "message": "Password Reset OTP sent successfully.",
+        "success": True
+    }
+    ```
+
 ## Authentication
 
-This project uses simpleJWT for authentication. Obtain the access and refresh tokens from the login endpoint and use the access token in the `Authorization` header at bearer token for protected endpoints.
+This project uses simpleJWT for authentication. Obtain the access and refresh tokens from the login endpoint and use the access token in the `Authorization` header as a bearer token for protected endpoints.
