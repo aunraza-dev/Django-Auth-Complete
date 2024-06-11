@@ -127,3 +127,11 @@ SWAGGER_SETTINGS = {
     }
 
 LOGIN_REDIRECT_URL = '/admin/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'raza.aunharaj@gmail.com'
+EMAIL_HOST_PASSWORD = 'awed cqeg bwsg tdhq'
+DEFAULT_EMAIL_FROM = 'raza.aunharaj@gmail.com'

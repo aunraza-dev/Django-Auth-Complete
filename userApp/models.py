@@ -11,6 +11,8 @@ class TimeStampModel(models.Model):
 
 class User(AbstractUser):
     bio = models.TextField(max_length=500, blank=True)
+    otp= models.IntegerField(blank=True, null=True)
+    otpVerified= models.BooleanField(default=False, blank=True, null=True)
 
     def __str__(self):
         return self.username

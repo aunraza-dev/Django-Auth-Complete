@@ -8,6 +8,8 @@ from rest_framework.permissions import AllowAny
 from userApp.utils import verify_password, hash_password
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+import pyotp
+from userApp.utils import Util
 
 class UserRegistrationView(APIView):
     permission_classes = [AllowAny]
@@ -31,15 +33,26 @@ class UserRegistrationView(APIView):
                 return Response({'message': 'User with this email already exists.', 'success': False})
 
             password = request.data.get('password')
+            totp = pyotp.TOTP(pyotp.random_base32(), digits=5)
+            otp = totp.now()
             user = User.objects.create(
                 email=email,
                 username=request.data.get('username'),
                 password=hash_password(password),
+                otp=otp
             )
+
+            email_data = {
+                'subject': 'OTP for Registration',
+                'body': f'Your OTP is: {otp}',
+                'to_email': user.email
+            }
+            Util.send_email(email_data)
+            
             return Response({'message': 'User Registered Successfully.', 'success': True})
         except Exception as e:
             return Response({'message': str(e), 'success': False})
-        
+                
 class UserLoginView(APIView):
     permission_classes = [AllowAny]
     @swagger_auto_schema(
