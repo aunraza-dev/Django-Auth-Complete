@@ -16,8 +16,8 @@ This project is a Django-based backend application that includes user registrati
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/django-user-management.git
-    cd django-user-management
+    git clone https://github.com/aunraza-dev/Django-Auth-Complete.git
+    cd Django-Auth-Complete
     ```
 
 2. Create a virtual environment and activate it:
