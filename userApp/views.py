@@ -52,6 +52,38 @@ class UserRegistrationView(APIView):
             return Response({'message': 'User Registered Successfully.', 'success': True})
         except Exception as e:
             return Response({'message': str(e), 'success': False})
+
+class OtpVerifiedView(APIView):
+    permission_classes = [AllowAny]
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['email', 'otp'],
+            properties={
+                'email': openapi.Schema(type=openapi.TYPE_STRING),
+                'otp': openapi.Schema(type=openapi.TYPE_INTEGER),
+            }
+        ),
+        responses={200: 'Success', 400: 'Bad Request'},
+    )
+    def post(self, request, format=None):
+        try:
+            email = request.data.get('email')
+            otp = request.data.get('otp')
+
+            user = User.objects.filter(email=email).first()
+            if user is None:
+                return Response({'message': 'User with this email does not exist.', 'success': False})
+
+            if user.otp != otp:
+                return Response({'message': 'Incorrect OTP.', 'success': False})
+
+            user.otpVerified = True
+            user.save()
+
+            return Response({'message': 'OTP verified successfully.', 'success': True})
+        except Exception as e:
+            return Response({'message': str(e), 'success': False})
                 
 class UserLoginView(APIView):
     permission_classes = [AllowAny]
