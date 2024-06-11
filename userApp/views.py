@@ -132,6 +132,41 @@ class UserLoginView(APIView):
         except Exception as e:
             return Response({'message': str(e), 'success': False})
         
+class SendPasswordResetOtpView(APIView):
+    permission_classes = [AllowAny]
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['email'],
+            properties={
+                'email': openapi.Schema(type=openapi.TYPE_STRING),
+            }
+        ),
+        responses={200: 'Success', 400: 'Bad Request'},
+    )
+    def post(self, request):
+        try:
+            email = request.data.get('email')
+            user = User.objects.get(email=email)
+
+            totp = pyotp.TOTP(pyotp.random_base32(), digits=5)
+            otp = totp.now()
+
+            email_data = {
+                'subject': 'OTP for Password Reset',
+                'body': f'Your OTP for Password Reset is: {otp}',
+                'to_email': user.email
+            }
+            user.otp =otp
+            user.save()
+            Util.send_email(email_data)
+
+            return Response({'message': 'Password Reset OTP sent successfully', 'success': True})
+        except User.DoesNotExist:
+            return Response({'message': 'User not found', 'success': False})
+        except Exception as e:
+            return Response({'message': str(e), 'success': False})
+
 class PasswordResetView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
