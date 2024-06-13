@@ -1,11 +1,77 @@
 {% extends "admin/base_site.html" %}
+{% load static %}
+
 {% block content %}
-<div class="login-box">
-    <h2>Login</h2>
-    <form method="post" action="{% url 'admin:login' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
+<div class="login-container">
+    <div class="login-box">
+        <h1>Login</h1> 
+        <form method="post" action="{% url 'admin:login' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="login-button">Login</button>
+        </form>
+    </div>
 </div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Background styling */
+    body {
+        background-color: #f4f7f6;
+        font-family: 'Arial', sans-serif;
+    }
+    /* Centering the login box */
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .login-box {
+        width: 100%;
+        max-width: 400px;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        text-align: center;
+    }
+    .login-box h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    /* Styling the form */
+    .login-box form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .login-box form p {
+        width: 100%;
+        text-align: left;
+    }
+    .login-box form input {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    /* Button styling */
+    .login-button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .login-button:hover {
+        background-color: #0056b3;
+    }
+</style>
 {% endblock %}

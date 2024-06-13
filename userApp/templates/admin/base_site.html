@@ -17,7 +17,7 @@
         }
 
         header {
-            background-color: #007bff;
+            background-color: #6200ff;
             color: white;
             padding: 20px 0;
             text-align: center;
@@ -90,7 +90,7 @@
         .login-box button {
             margin-top: 10px;
             padding: 10px;
-            background-color: #007bff;
+            background-color: #6200ff;
             color: white;
             border: none;
             border-radius: 3px;
@@ -98,7 +98,7 @@
         }
 
         .login-box button:hover {
-            background-color: #0056b3;
+            background-color: #6200ff;
         }
     </style>
     {% block extra_head %}{% endblock %}
@@ -110,14 +110,14 @@
     <nav>
         {% block nav %}
         <a href="{% url 'admin:index' %}">Home</a>
-        <a href="{% url 'admin:logout' %}">Logout</a>
+        <a href="{% url 'admin_logout' %}">Logout</a>
         {% endblock %}
     </nav>
     <main>
         {% block content %}{% endblock %}
     </main>
     <footer>
-        <p>&copy; 2024 Aun Hiraj</p>
+        <p>&copy; Aun Hiraj</p>
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', function () {

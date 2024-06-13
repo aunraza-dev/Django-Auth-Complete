@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from userApp.views import logoutView
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,

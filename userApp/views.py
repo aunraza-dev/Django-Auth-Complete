@@ -10,6 +10,8 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 import pyotp
 from userApp.utils import Util
+from django.contrib.auth import logout
+from django.shortcuts import redirect, render
 
 class UserRegistrationView(APIView):
     permission_classes = [AllowAny]
@@ -214,3 +216,7 @@ class UserDetailView(APIView):
             return Response({'data': user_data, 'message': 'User data retrieved successfully', 'success': True})
         except Exception as e:
             return Response({'message': str(e), 'success': False})
+        
+def logoutView(request):
+    logout(request)
+    return render(request, 'admin/logout.html')

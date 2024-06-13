@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logout - Admin</title>
+    <!-- Load static template tag library -->
+    {% load static %}
+    <!-- Link to Django's default admin styles for consistency -->
+    <link rel="stylesheet" href="{% static 'admin/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'admin/css/login.css' %}">
+    <!-- Additional custom styling for the logout page -->
+    <style>
+        body {
+            background-color: #f4f7f6;
+            font-family: 'Arial', sans-serif;
+        }
+        .logout-container {
+            max-width: 500px;
+            margin: 100px auto;
+            padding: 20px;
+            text-align: center;
+            background: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .logout-container h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .logout-container p {
+            margin: 20px 0;
+            color: #666;
+        }
+        .logout-container a {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .logout-container a:hover {
+            background-color: #0056b3;
+        }
+        .logout-footer {
+            margin-top: 30px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="logout-container">
+        <h1>You have been logged out</h1>
+        <p>Thank you for visiting. You have successfully logged out.</p>
+        <a href="{% url 'admin:login' %}">Log in again</a>
+        <div class="logout-footer">
+            <p>&copy; AunHiraj. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
